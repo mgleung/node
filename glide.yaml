@@ -50,3 +50,12 @@ import:
   - kubernetes
   - tools/clientcmd
   - tools/clientcmd/api
+- package: github.com/olekukonko/tablewriter
+- package: github.com/osrg/gobgp
+  version: v1.22
+  subpackages:
+  - client
+  - packet/bgp
+- package: github.com/shirou/gopsutil
+  subpackages:
+  - process

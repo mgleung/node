@@ -24,6 +24,7 @@ import (
 	felix "github.com/projectcalico/felix/daemon"
 
 	"github.com/projectcalico/node/pkg/allocateipip"
+	"github.com/projectcalico/node/pkg/nodestatus"
 	"github.com/projectcalico/node/pkg/readiness"
 	"github.com/projectcalico/node/pkg/startup"
 
@@ -52,6 +53,9 @@ var thresholdTime = flagSet.Duration("threshold-time", 30*time.Second, "Threshol
 var runConfd = flagSet.Bool("confd", false, "Run confd")
 var confdRunOnce = flagSet.Bool("confd-run-once", false, "Run confd in oneshot mode")
 var confdKeep = flagSet.Bool("confd-keep-stage-file", false, "Keep stage file when running confd")
+
+// node status
+var nodeStatus = flagSet.Bool("node-status", false, "Run node status endpoint")
 
 func main() {
 	// Set up logging formatting.
@@ -110,6 +114,8 @@ func main() {
 		confd.Run(cfg)
 	} else if *runAllocateIPIP {
 		allocateipip.Run()
+	} else if *nodeStatus {
+		nodestatus.Run()
 	} else {
 		fmt.Println("No valid options provided. Usage:")
 		flagSet.PrintDefaults()
