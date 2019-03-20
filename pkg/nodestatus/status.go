@@ -243,7 +243,7 @@ func printBIRDPeers(w http.ResponseWriter, ipv string) {
 	}
 
 	// Finally, print the peers.
-	printPeers(peers)
+	printPeers(w, peers)
 }
 
 // scanBIRDPeers scans through BIRD output to return a slice of bgpPeer
@@ -403,13 +403,12 @@ func printGoBGPPeers(w http.ResponseWriter, ipv string) {
 	}
 
 	// Finally, print the peers.
-	printPeers(peers)
+	printPeers(w, peers)
 }
 
-// TODO: Need to figure out how to get tablewriter to write to the ResponseWriter
 // printPeers prints out the slice of peers in table format.
-func printPeers(peers []bgpPeer) {
-	table := tablewriter.NewWriter(os.Stdout)
+func printPeers(w http.ResponseWriter, peers []bgpPeer) {
+	table := tablewriter.NewWriter(w)
 	table.SetHeader([]string{"Peer address", "Peer type", "State", "Since", "Info"})
 
 	for _, peer := range peers {
